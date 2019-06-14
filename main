@@ -1,0 +1,102 @@
+importação aleatória
+importar timeit
+import matplotlib as mpl
+import matplotlib.pyplot como plt
+importação itertools como ele
+mpl.use ( ' Agg ' )
+
+def  geraçãoListaAle ( tam ):
+    lista = []
+    para eu na  faixa (tam):
+        lista.append (i)
+    random.shuffle (lista)
+    return lista
+
+def  geraListaCre ( tam ):
+    lista = []
+    para eu na  faixa (tam):
+        lista.append (i)
+    return lista
+
+def  geraListaDec ( tam ):
+    lista = []
+    n = tam
+    para eu na  faixa (tam):
+        lista.append (n)
+        n - = 1
+    return lista
+
+ Heap def ( lista , n , i ):
+    maior = i
+    esquerda =  2  * i +  1     
+    direita =  2  * i +  2     
+  
+    se a esquerda < n e lista [i] < lista [direita]:
+        maior = esquerda
+  
+    se a direita < n e lista [maior] < lista [direita]:
+        maior = direita
+  
+    se maior ! = i:
+        lista [i], lista [maior] = lista [maior], lista [i]     
+        Pilha (lista, n, maior) 
+  
+
+def  HeapSort ( lista ):
+    tam =  len (lista)
+  
+    para eu na  faixa (tam, - 1 , - 1 ):
+        Pilha (lista, tam, i) 
+  
+    para eu na  faixa (tam - 1 , 0 , - 1 ):
+        lista [i], lista [ 0 ] = lista [ 0 ], lista [i]
+        Pilha (lista, eu, 0 )
+
+def  desenhaGrafico ( x , pc , mc , ae , nome , xl  =  " Entradas " , yl  =  " Tempo (s) " ):
+    fig = plt.figure ( figsize = ( 10 , 8 ))
+    ax = fig.add_subplot ( 111 )
+    ax.plot (x, pc, label  =  " Pior Caso " )
+    ax.plot (x, mc, label = " Melhor Caso " )
+    ax.plot (x, ae, label = " Aleatório " )
+    ax.legend ( bbox_to_anchor = ( 1 , 1 ), bbox_transform = plt.gcf (). transFigura)
+    plt.ylabel (yl)
+    plt.xlabel (xl)
+    fig.savefig (nome)
+
+x = [ 10000 , 20000 , 30000 , 40000 , 50000 ]
+
+PiorCaso = []
+MelhorCaso = []
+CasoAle = []
+
+para i em x:
+    lista = geraListaDec (i)
+    PiorCaso.append (timeit.timeit ( ' HeapSort ( {} ) ' .format (lista), setup = " de __main__ import HeapSort " , número = 1 ))
+    
+    lista = geraListaAle (i)
+    CasoAle.append (timeit.timeit ( ' HeapSort ( {} ) ' .format (lista), setup = " from __main__ import HeapSort " , número = 1 ))
+    
+    lista = geraListaCre (i)
+    MelhorCaso.append (timeit.timeit ( ' HeapSort ( {} ) ' .format (lista), setup = " from __main__ import HeapSort " , número = 1 ))
+
+desenhaGrafico (x, PiorCaso, MelhorCaso, CasoAle, " graph_time.png " )
+
+lis = [ 1 , 2 , 3 , 4 , 5 , 6 ]
+permut =  list (it.permutations (lis, 6 ))
+tempo = []
+listaok = []
+
+para i em permut:
+  listaok.append ( lista (i))
+
+para eu no  intervalo ( len (listaok)):
+    tempo.append (timeit.timeit ( ' HeapSort ( {} ) ' .format (listaok [i]), setup = " from __main__ import HeapSort " , número = 1 ))
+
+maior = tempo.index ( max (tempo))
+menor = tempo.index ( min (tempo))
+
+print ( ' Tempo maior: ' , max (tempo))
+imprimir (permut [maior])
+print ( " \ n " )
+print ( ' Tempo menor: ' , min (tempo))
+imprimir (permut [menor])
